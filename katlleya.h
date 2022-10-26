@@ -1,5 +1,5 @@
-#ifndef KATELLEYA_H
-#define KATELLEYA_H
+#ifndef KATLLEYA_H
+#define KATLLEYA_H
 
 #include <QMainWindow>
 #include <QFileDialog>
@@ -7,18 +7,23 @@
 #include <QClipboard>
 #include <QMimeData>
 #include <QFont>
+#include <QCloseEvent>
+#include <QTextEdit>
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class Katelleya; }
+namespace Ui { class Katlleya; }
 QT_END_NAMESPACE
 
-class Katelleya : public QMainWindow
+class Katlleya : public QMainWindow
 {
     Q_OBJECT
 
+protected:
+   void closeEvent(QCloseEvent *event) override;
+
 public:
-    Katelleya(QWidget *parent = nullptr);
-    ~Katelleya();
+    Katlleya(QWidget *parent = nullptr);
+    ~Katlleya();
 
 private slots:
     void on_actionOpen_triggered();
@@ -41,8 +46,17 @@ private slots:
 
     void on_actionItalic_triggered(bool checked);
 
+    void on_actionUndo_triggered();
+
+    void on_actionRedo_triggered();
+
+    void on_textEdit_textChanged();
+
+    void on_actionAbout_triggered();
+
 private:
-    Ui::Katelleya *ui;
+    Ui::Katlleya *ui;
     QString currentFile;
+    bool documentWasEdited {false};
 };
-#endif // KATELLEYA_H
+#endif // KATLLEYA_H

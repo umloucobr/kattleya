@@ -1,20 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Katelleya</class>
- <widget class="QMainWindow" name="Katelleya">
+ <class>Katlleya</class>
+ <widget class="QMainWindow" name="Katlleya">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>729</width>
+    <height>519</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Katelleya</string>
+   <string>Katlleya</string>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="mouseTracking">
+    <bool>false</bool>
+   </property>
+   <property name="tabletTracking">
+    <bool>false</bool>
+   </property>
+   <property name="acceptDrops">
+    <bool>false</bool>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
    <widget class="QTextEdit" name="textEdit">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -23,6 +38,20 @@
       <height>41</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="tabChangesFocus">
+     <bool>false</bool>
+    </property>
+    <property name="overwriteMode">
+     <bool>false</bool>
+    </property>
+    <property name="acceptRichText">
+     <bool>false</bool>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -30,7 +59,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>729</width>
      <height>22</height>
     </rect>
    </property>
@@ -42,6 +71,7 @@
     <addaction name="actionOpen"/>
     <addaction name="actionSave"/>
     <addaction name="actionSave_as"/>
+    <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
@@ -51,6 +81,9 @@
     <addaction name="actionCopy"/>
     <addaction name="actionPaste"/>
     <addaction name="actionCut"/>
+    <addaction name="separator"/>
+    <addaction name="actionUndo"/>
+    <addaction name="actionRedo"/>
    </widget>
    <widget class="QMenu" name="menuText">
     <property name="title">
@@ -76,20 +109,32 @@
    <property name="text">
     <string>New Document</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
   </action>
   <action name="actionOpen">
    <property name="text">
     <string>Open</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
    </property>
   </action>
   <action name="actionSave">
    <property name="text">
     <string>Save</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
   </action>
   <action name="actionSave_as">
    <property name="text">
     <string>Save As</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+S</string>
    </property>
   </action>
   <action name="actionExit">
@@ -98,13 +143,22 @@
    </property>
   </action>
   <action name="actionCopy">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Copy</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
    </property>
   </action>
   <action name="actionPaste">
    <property name="text">
     <string>Paste</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+V</string>
    </property>
   </action>
   <action name="actionBold">
@@ -114,6 +168,9 @@
    <property name="text">
     <string>Bold</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+B</string>
+   </property>
   </action>
   <action name="actionItalic">
    <property name="checkable">
@@ -121,6 +178,9 @@
    </property>
    <property name="text">
     <string>Italic</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+I</string>
    </property>
   </action>
   <action name="actionHelp">
@@ -136,6 +196,25 @@
   <action name="actionCut">
    <property name="text">
     <string>Cut</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+X</string>
+   </property>
+  </action>
+  <action name="actionUndo">
+   <property name="text">
+    <string>Undo</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Z</string>
+   </property>
+  </action>
+  <action name="actionRedo">
+   <property name="text">
+    <string>Redo</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+Z</string>
    </property>
   </action>
  </widget>

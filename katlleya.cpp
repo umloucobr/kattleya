@@ -1,20 +1,21 @@
-#include "katelleya.h"
-#include "./ui_katelleya.h"
+#include "katlleya.h"
+#include "./ui_katlleya.h"
 
-Katelleya::Katelleya(QWidget *parent)
+Katlleya::Katlleya(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::Katelleya)
+    , ui(new Ui::Katlleya)
 {
     ui->setupUi(this);
     setCentralWidget(ui->textEdit);
 }
 
-Katelleya::~Katelleya()
+Katlleya::~Katlleya()
 {
     delete ui;
 }
 
-void Katelleya::on_actionNew_triggered()
+//Tool bar actions.
+void Katlleya::on_actionNew_triggered()
 {
     QMessageBox messageBox;
     messageBox.setIcon(QMessageBox::Warning);
@@ -35,7 +36,7 @@ void Katelleya::on_actionNew_triggered()
 }
 
 
-void Katelleya::on_actionOpen_triggered()
+void Katlleya::on_actionOpen_triggered()
 {
     QString fileName = QFileDialog::getOpenFileName(this, "Open the file");
     if (fileName.isEmpty())
@@ -54,9 +55,10 @@ void Katelleya::on_actionOpen_triggered()
 }
 
 
-void Katelleya::on_actionSave_triggered()
+void Katlleya::on_actionSave_triggered()
 {
     QString fileName;
+
     if (currentFile.isEmpty()) {
         fileName = QFileDialog::getSaveFileName(this, "Save");
         if (fileName.isEmpty())
@@ -65,11 +67,14 @@ void Katelleya::on_actionSave_triggered()
     } else {
         fileName = currentFile;
     }
+
     QFile file(fileName);
+
     if (!file.open(QIODevice::WriteOnly | QFile::Text)) {
         QMessageBox::warning(this, "Warning", "Cannot save file: " + file.errorString());
         return;
     }
+
     setWindowTitle(fileName);
     QTextStream out(&file);
     QString text = ui->textEdit->toPlainText();
@@ -78,19 +83,23 @@ void Katelleya::on_actionSave_triggered()
 }
 
 
-void Katelleya::on_actionSave_as_triggered()
+void Katlleya::on_actionSave_as_triggered()
 {
     QString fileName = QFileDialog::getSaveFileName(this, "Save as");
+
     if (fileName.isEmpty())
         return;
+
     QFile file(fileName);
 
     if (!file.open(QFile::WriteOnly | QFile::Text)) {
         QMessageBox::warning(this, "Warning", "Cannot save file: " + file.errorString());
         return;
     }
+
     currentFile = fileName;
     setWindowTitle(fileName);
+
     QTextStream out(&file);
     QString text = ui->textEdit->toPlainText();
     out << text;
@@ -98,47 +107,30 @@ void Katelleya::on_actionSave_as_triggered()
 }
 
 
-void Katelleya::on_actionExit_triggered()
+void Katlleya::on_actionExit_triggered()
 {
-    QMessageBox messageBox;
-    messageBox.setIcon(QMessageBox::Warning);
-    messageBox.setText("Are you sure you want to quit?");
-    messageBox.setStandardButtons(QMessageBox::Cancel | QMessageBox::Save | QMessageBox::Discard);
-    messageBox.setDefaultButton(QMessageBox::Cancel);
-    currentFile.clear();
-    int result = messageBox.exec();
-    switch (result){
-        case QMessageBox::Save:
-            Katelleya::on_actionSave_triggered();
-        case QMessageBox::Discard:
-            QApplication::quit();
-        case QMessageBox::Cancel:
-            return;
-            break;
-        default:
-            break;
-    }
+    QApplication::quit();
 }
 
 
-void Katelleya::on_actionCopy_triggered()
+void Katlleya::on_actionCopy_triggered()
 {
     ui->textEdit->copy();
 }
 
 
-void Katelleya::on_actionPaste_triggered()
+void Katlleya::on_actionPaste_triggered()
 {
     ui->textEdit->paste();
 }
 
 
-void Katelleya::on_actionCut_triggered()
+void Katlleya::on_actionCut_triggered()
 {
     ui->textEdit->cut();
 }
 
-void Katelleya::on_actionBold_triggered(bool checked)
+void Katlleya::on_actionBold_triggered(bool checked)
 {
     if(checked){
         ui->textEdit->setFontWeight(QFont::Bold);
@@ -149,7 +141,7 @@ void Katelleya::on_actionBold_triggered(bool checked)
 }
 
 
-void Katelleya::on_actionItalic_triggered(bool checked)
+void Katlleya::on_actionItalic_triggered(bool checked)
 {
     if(checked){
         ui->textEdit->setFontItalic(true);
@@ -157,5 +149,71 @@ void Katelleya::on_actionItalic_triggered(bool checked)
     else {
         ui->textEdit->setFontItalic(false);
     }
+}
+
+
+void Katlleya::on_actionUndo_triggered()
+{
+    ui->textEdit->undo();
+}
+
+void Katlleya::on_actionRedo_triggered()
+{
+    ui->textEdit->redo();
+}
+
+//Ask if user want to save before quitting.
+void Katlleya::closeEvent(QCloseEvent *event)
+{
+    if(documentWasEdited){
+        QMessageBox messageBox;
+        messageBox.setIcon(QMessageBox::Warning);
+        messageBox.setText("Are you sure you want to quit?");
+        messageBox.setStandardButtons(QMessageBox::Cancel | QMessageBox::Save | QMessageBox::Discard);
+        messageBox.setDefaultButton(QMessageBox::Cancel);
+        int result = messageBox.exec();
+        switch (result){
+        case QMessageBox::Save:
+            event->accept();
+            Katlleya::on_actionSave_triggered();
+            QApplication::quit();
+        case QMessageBox::Discard:
+            event->accept();
+            QApplication::quit();
+        case QMessageBox::Cancel:
+            event->ignore();
+        default:
+            break;
+        }
+    }
+    else {
+        event->accept();
+        QApplication::quit();
+    }
+}
+
+void Katlleya::on_textEdit_textChanged()
+{
+    if(currentFile.isEmpty()){
+        QString filename = {"*Katlleya"};
+        setWindowTitle(filename);
+    }
+    else{
+        QString filename = currentFile;
+        filename.prepend("*");
+        setWindowTitle(filename);
+    }
+    documentWasEdited = true;
+}
+
+
+void Katlleya::on_actionAbout_triggered()
+{
+    QMessageBox messageBox;
+    messageBox.setIcon(QMessageBox::Information);
+    messageBox.setText("Kattleya V1.0");
+    messageBox.setStandardButtons(QMessageBox::Ok);
+    messageBox.setDefaultButton(QMessageBox::Ok);
+    messageBox.exec();
 }
 

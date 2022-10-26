@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(katelleya VERSION 0.1 LANGUAGES CXX)
+project(katlleya VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -16,37 +16,37 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
 set(PROJECT_SOURCES
         main.cpp
-        katelleya.cpp
-        katelleya.h
-        katelleya.ui
+        katlleya.cpp
+        katlleya.h
+        katlleya.ui
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    qt_add_executable(katelleya
+    qt_add_executable(katlleya
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
     )
 # Define target properties for Android with Qt 6 as:
-#    set_property(TARGET katelleya APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
+#    set_property(TARGET katlleya APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
 #                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
 # For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
 else()
     if(ANDROID)
-        add_library(katelleya SHARED
+        add_library(katlleya SHARED
             ${PROJECT_SOURCES}
         )
 # Define properties for Android with Qt 5 after find_package() calls as:
 #    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
     else()
-        add_executable(katelleya
+        add_executable(katlleya
             ${PROJECT_SOURCES}
         )
     endif()
 endif()
 
-target_link_libraries(katelleya PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(katlleya PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 
-set_target_properties(katelleya PROPERTIES
+set_target_properties(katlleya PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
@@ -55,5 +55,5 @@ set_target_properties(katelleya PROPERTIES
 )
 
 if(QT_VERSION_MAJOR EQUAL 6)
-    qt_finalize_executable(katelleya)
+    qt_finalize_executable(katlleya)
 endif()
