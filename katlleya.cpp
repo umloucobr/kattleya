@@ -38,7 +38,7 @@ void Katlleya::on_actionNew_triggered()
 
 void Katlleya::on_actionOpen_triggered()
 {
-    QString fileName = QFileDialog::getOpenFileName(this, "Open the file");
+    QString fileName = QFileDialog::getOpenFileName(this, "Open the file", "", "Text files (*.txt);;All Files (*)");
     if (fileName.isEmpty())
         return;
     QFile file(fileName);
@@ -60,7 +60,7 @@ void Katlleya::on_actionSave_triggered()
     QString fileName;
 
     if (currentFile.isEmpty()) {
-        fileName = QFileDialog::getSaveFileName(this, "Save");
+        fileName = QFileDialog::getSaveFileName(this, "Save", "", "Text files (*.txt);;All Files (*)");
         if (fileName.isEmpty())
             return;
         currentFile = fileName;
@@ -85,7 +85,7 @@ void Katlleya::on_actionSave_triggered()
 
 void Katlleya::on_actionSave_as_triggered()
 {
-    QString fileName = QFileDialog::getSaveFileName(this, "Save as");
+    QString fileName = QFileDialog::getSaveFileName(this, "Save as", "", "Text files (*.txt);;All Files (*)");
 
     if (fileName.isEmpty())
         return;
